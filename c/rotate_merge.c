@@ -232,14 +232,15 @@ static void FUNC(rotateMerge)(VAR* start, VAR* mid, VAR* end, VAR* ext, MERGECMP
     end = FUNC(rotateRightExpSearch)(mid, end, mid - 1, cmp);
     if (end < mid) return;
     start = FUNC(rotateLeftExpSearch)(start, mid, mid, cmp);
-    if ((end - start) / 2 > EXTLEN) {
+    size_t llen = mid - start, rlen = end - mid;
+    if (((llen < rlen) ? llen : rlen) > EXTLEN) {
         VAR *m1, *m2, *m3;
-        if (mid - start >= end - mid) {
-            m1 = start + (mid - start) / 2;
+        if (llen >= rlen) {
+            m1 = start + (llen) / 2;
             m2 = FUNC(rotateMonoboundLeft)(mid, end, m1, cmp);
             m3 = m1 + (m2 - mid);
         } else {
-            m2 = mid + (end - mid) / 2;
+            m2 = mid + (rlen) / 2;
             m1 = FUNC(rotateMonoboundRight)(start, mid, m2, cmp);
             m3 = (m2++) - (mid - m1);
         }
@@ -247,7 +248,7 @@ static void FUNC(rotateMerge)(VAR* start, VAR* mid, VAR* end, VAR* ext, MERGECMP
         FUNC(rotateMerge)(m3 + 1, m2, end, ext, cmp);
         FUNC(rotateMerge)(start, m1, m3, ext, cmp);
     } else {
-        if (end - mid < mid - start) {
+        if (rlen < llen) {
             FUNC(rotateMergeDown)(start, mid, end, ext, cmp);
         } else {
             FUNC(rotateMergeUp)(start, mid, end, ext, cmp);

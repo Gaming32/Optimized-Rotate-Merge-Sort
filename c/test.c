@@ -64,11 +64,31 @@ int main() {
 
     printf("Initializing array...\n");
     SortPair* array = malloc(ARRAY_LENGTH * sizeof(SortPair));
+    double j = 0;
+    double offset = RAND_MAX / ARRAY_LENGTH;
     for (size_t i = 0; i < ARRAY_LENGTH; i++) {
-        array[i].key = (int)(rand() / (double)RAND_MAX * RANDOM_LIMIT);
-        // array[i].key = i;
-        // array[i].key = ARRAY_LENGTH - i - 1;
-        // array[i].key = rand();
+        // /*
+            // random
+            array[i].key = (int)(rand() / (double)RAND_MAX * RANDOM_LIMIT);
+        // */
+        /*
+            // no shuffle
+            array[i].key = (int)j;
+            j += offset;
+        */
+        /*
+            // sawtooth
+            array[i].key = (int)j;
+            j += offset;
+            if (j >= ARRAY_LENGTH / 4) {
+                j = 0;
+            }
+        */
+        /*
+            // reversed
+            array[i].key = RAND_MAX - j - 1;
+            j += offset
+        */
     }
 
     printf("Initializing empty counts...\n");
