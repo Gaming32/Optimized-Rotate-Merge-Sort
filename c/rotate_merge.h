@@ -10,6 +10,8 @@
 #include <errno.h>
 
 #define MERGEEXTSIZE 256
+#define EXTLEN (MERGEEXTSIZE / sizeof(VAR))
+
 #define MIN_RUN 8
 
 typedef int MERGECMP(const void *a, const void *b);
@@ -26,12 +28,10 @@ typedef int MERGECMP(const void *a, const void *b);
 //////////////////////////////////////////////////////////
 
 #undef VAR
-#undef EXTLEN
 #undef FUNC
 #undef STRUCT
 
 #define VAR char
-#define EXTLEN 256
 #define FUNC(NAME) NAME##8
 #define STRUCT(NAME) struct NAME##8
 
@@ -49,12 +49,10 @@ typedef int MERGECMP(const void *a, const void *b);
 //////////////////////////////////////////////////////////
 
 #undef VAR
-#undef EXTLEN
 #undef FUNC
 #undef STRUCT
 
 #define VAR short
-#define EXTLEN 128
 #define FUNC(NAME) NAME##16
 #define STRUCT(NAME) struct NAME##16
 
@@ -72,12 +70,10 @@ typedef int MERGECMP(const void *a, const void *b);
 //////////////////////////////////////////////////////////
 
 #undef VAR
-#undef EXTLEN
 #undef FUNC
 #undef STRUCT
 
 #define VAR int
-#define EXTLEN 64
 #define FUNC(NAME) NAME##32
 #define STRUCT(NAME) struct NAME##32
 
@@ -95,12 +91,10 @@ typedef int MERGECMP(const void *a, const void *b);
 //////////////////////////////////////////////////////////
 
 #undef VAR
-#undef EXTLEN
 #undef FUNC
 #undef STRUCT
 
 #define VAR long long
-#define EXTLEN 32
 #define FUNC(NAME) NAME##64
 #define STRUCT(NAME) struct NAME##64
 
@@ -119,12 +113,10 @@ typedef int MERGECMP(const void *a, const void *b);
 //////////////////////////////////////////////////////////
 
 #undef VAR
-#undef EXTLEN
 #undef FUNC
 #undef STRUCT
 
 #define VAR long double
-#define EXTLEN 16
 #define FUNC(NAME) NAME##128
 #define STRUCT(NAME) struct NAME##128
 
@@ -177,8 +169,8 @@ void optimizedRotateMergeSort(void *array, size_t nelements, size_t elemsize, ME
 }
 
 #undef VAR
-#undef EXTLEN
 #undef FUNC
 #undef STRUCT
+#undef EXTLEN
 
 #endif

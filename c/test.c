@@ -10,12 +10,12 @@
     #define ZU "%zu"
 #endif
 
-// #define ARRAY_LENGTH 16777216
-#define ARRAY_LENGTH 16
+#define ARRAY_LENGTH 16777216
+// #define ARRAY_LENGTH 16
 // #define ARRAY_LENGTH 128
 
-// #define RANDOM_LIMIT RAND_MAX
-#define RANDOM_LIMIT ARRAY_LENGTH
+#define RANDOM_LIMIT RAND_MAX
+// #define RANDOM_LIMIT ARRAY_LENGTH
 
 #define RANDOM_SEED time(NULL)
 
@@ -66,6 +66,8 @@ int main() {
     SortPair* array = malloc(ARRAY_LENGTH * sizeof(SortPair));
     for (size_t i = 0; i < ARRAY_LENGTH; i++) {
         array[i].key = (int)(rand() / (double)RAND_MAX * RANDOM_LIMIT);
+        // array[i].key = i;
+        // array[i].key = ARRAY_LENGTH - i - 1;
         // array[i].key = rand();
     }
 
@@ -90,13 +92,13 @@ int main() {
     printf("Sorting copy...\n\n");
     qsort(copy, ARRAY_LENGTH, sizeof(int), compare_qsort);
 
-    printSortArray(array);
+    // printSortArray(array);
     printf("Sorting %i items...\n", ARRAY_LENGTH);
     clock_t start = clock();
     optimizedRotateMergeSort(array, ARRAY_LENGTH, sizeof(SortPair), compare_grailsort);
     clock_t end = clock();
     printf("Done sorting in ~%f seconds.\n", (double)(end - start) / CLOCKS_PER_SEC);
-    printSortArray(array);
+    // printSortArray(array);
 
     printf("Validating...\n");
     size_t validation = validateArrayWithCopy(array, copy);
